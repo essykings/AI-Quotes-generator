@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI QUOTE GENERATOR</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+      integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Google Fonts -->
+    
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap");
+      body {
+        background: rgb(255, 255, 255);
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 1) 0%,
+          rgb(212, 179, 170) 50%,
+          rgba(255, 255, 255, 1) 100%
+        );
+        font-family: "DM Mono", monospace;
+      }
+      #api {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+      }
+      .header {
+        font-size: 3rem;
+        font-weight: 500;
+      }
+      p {
+        font-size: 1.5rem;
+        font-weight: 500;
+      }
+      .btn-check {
+        display: none;
+      }
+      label {
+        /* width: 100%;
+        height: 110px; */
+      }
+
+      .radio-group input[type="radio"] {
+        display: none;
+      }
+
+      .separator {
+        padding: 25px 0;
+        position: relative;
+        display: flex;
+        justify-content: center;
+      }
+      .separator::before,
+      .separator::after {
+        content: "";
+        height: 2px;
+        width: 30%;
+        background-color: #190101;
+        position: absolute;
+        top: 50%;
+      }
+      .separator::before {
+        left: 10%;
+      }
+      .separator::after {
+        right: 10%;
+      }
+
+      .bg-color {
+        background-color: transparent;
+        border-radius: 5%;
+        color: #000;
+        text-align: center;
+      }
+      .btn-check + .btn {
+        background-color: transparent;
+        border-color: #ff00b7;
+        color: #fff;
+        font-size: 1.5rem;
+        color: #000;
+      }
+
+      #btn,
+      .btn-check:checked + .btn {
+        background-color: #d450b3;
+        border-color: #ff00b7;
+        color: #fff;
+      }
+      .card-text {
+        word-wrap: break-word;
+      }
+      .message {
+        display: none;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <button
+      id="api"
+      type="button"
+      class="btn btn-primary"
+      data-bs-toggle="modal"
+      data-bs-target="#myModal"
+    >
+      ADD API KEY
+    </button>
+    <div class="container mt-5">
+      <div class="message alert alert-info" role="alert">
+        Please provide your API_KEY, API_KEY will be stored on the browser
+      </div>
+
+      <div
+        class="modal fade"
+        id="myModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                Your API Key remains stored locally in your browser
+              </h5>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="apikey">API KEY</label>
+                <input type="text" class="form-control" id="apikey" />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-primary">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="header text-center">AI QUOTE GENERATOR</div>
+      <div class="quotes-container text-center mt-4">
+        <p>
+          Create the perfect quote based on your feelings or choose from our
+          categories
+        </p>
+        <div
+          class="row quotes justify-content-center mt-8 mb-4"
+          style="margin-top: 100px"
+        ></div>
+
+        <p class="separator">OR</p>
+        <input
+          id="input"
+          name="mood"
+          type="text"
+          placeholder="Enter your own mood"
+          class="form-control mb-4"
+        />
+        <button
+          id="btn"
+          class="generate-btn btn btn-primary btn-lg"
+          type="submit"
+        >
+          Generate Quotes
+        </button>
+      </div>
+    </div>
+
+    <div class="container text-center mt-5 mb-4">
+      <div id="result" class="row">
+        <!-- <div class="col-lg-6 mt-5 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <p class="card-text">
+                he beauty of sadness is that it reminds us of the depth and complexity of our emotions.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mt-5 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <p class="card-text">
+                The beauty of sadness is that it reminds us of the depth and complexity of our emotions
+              </p>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
