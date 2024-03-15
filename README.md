@@ -1,5 +1,4 @@
 # AI-Quotes-generator
-# AI-Quotes-Generator
 
 This is an AI-powered quotes generator app. Users have the option to choose a category or enter their current mood, and the AI will generate relevant quotes based on their selection.
 
